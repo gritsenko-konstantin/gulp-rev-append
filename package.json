@@ -18,7 +18,7 @@
     "cache",
     "revision"
   ],
-  "author": "Todd Anderson",
+  "author": "Todd Anderson, Vlad Fedosov <vlad.fedosov@gmail.com>",
   "licenses": [
     {
       "type": "MIT",
