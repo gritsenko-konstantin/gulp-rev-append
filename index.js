@@ -47,33 +47,34 @@ var revPlugin = function revPlugin(params) {
 
         for (i = 0; i < length; i++) {
             line = lines[i];
-            groups = params.regExp.exec(line);
 
-            if (groups && groups.length > 1) {
-                // are we an "absoulte path"? (e.g. /js/app.js)
-                var normPath = path.normalize(groups[1]);
-                if (normPath.indexOf(path.sep) === 0) { //we have absolute path
-                    if (params.basePath !== null) {
-                        dependencyPath = path.join(params.basePath, normPath);
-                    } else {
-                        dependencyPath = path.join(file.base, normPath);
+            while ((groups = params.regExp.exec(line)) !== null) {
+                if (groups.length > 1) {
+                    // are we an "absoulte path"? (e.g. /js/app.js)
+                    var normPath = path.normalize(groups[1]);
+                    if (normPath.indexOf(path.sep) === 0) { //we have absolute path
+                        if (params.basePath !== null) {
+                            dependencyPath = path.join(params.basePath, normPath);
+                        } else {
+                            dependencyPath = path.join(file.base, normPath);
+                        }
                     }
+                    else {
+                        dependencyPath = path.resolve(path.dirname(file.path), normPath);
+                    }
+    
+                    try {
+                        data = fs.readFileSync(dependencyPath);
+                        hash = crypto.createHash('md5');
+                        hash.update(data.toString(), 'utf8');
+                        hashStr = hash.digest('hex');
+                    } catch (e) {
+                        gutil.log('Can\'t find file (' + dependencyPath + ') from line (' + line.trim() + '). Random string will be used.');
+                        hashStr = Math.floor((Math.random() * 10000) + 1);
+                    }
+    
+                    line = line.replace(groups[2], hashStr);
                 }
-                else {
-                    dependencyPath = path.resolve(path.dirname(file.path), normPath);
-                }
-
-                try {
-                    data = fs.readFileSync(dependencyPath);
-                    hash = crypto.createHash('md5');
-                    hash.update(data.toString(), 'utf8');
-                    hashStr = hash.digest('hex');
-                } catch (e) {
-                    gutil.log('Can\'t find file (' + dependencyPath + ') from line (' + line.trim() + '). Random string will be used.');
-                    hashStr = Math.floor((Math.random() * 10000) + 1);
-                }
-
-                line = line.replace(groups[2], hashStr);
             }
 
             lines[i] = line;
