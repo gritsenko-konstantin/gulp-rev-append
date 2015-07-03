@@ -10,7 +10,7 @@ var revPlugin = function revPlugin(params) {
 
     var defaultParams = {
         basePath: null,
-        regExp: /(?:href=|src=|url\()['|"]([^\s>"']+?)\?rev=(@@hash)['|"]/gi
+        regExp: /(?:href=|src=|url\()['|"]([^\s>"']+?)\?rev=(@@@)['|"]/gi
     };
     params = extend({}, defaultParams, params);
 
@@ -31,7 +31,7 @@ var revPlugin = function revPlugin(params) {
         var line;
         var groups;
         var dependencyPath;
-        var data, hash;
+        var data, hash, hashStr;
 
         if (!file) {
             throw new PluginError('gulp-rev-append', 'Missing file option for gulp-rev-append.');
@@ -48,6 +48,7 @@ var revPlugin = function revPlugin(params) {
         for (i = 0; i < length; i++) {
             line = lines[i];
             groups = params.regExp.exec(line);
+
             if (groups && groups.length > 1) {
                 // are we an "absoulte path"? (e.g. /js/app.js)
                 var normPath = path.normalize(groups[1]);
@@ -66,11 +67,15 @@ var revPlugin = function revPlugin(params) {
                     data = fs.readFileSync(dependencyPath);
                     hash = crypto.createHash('md5');
                     hash.update(data.toString(), 'utf8');
-                    line = line.replace(groups[2], hash.digest('hex'));
+                    hashStr = hash.digest('hex');
                 } catch (e) {
-                    // fail silently.
+                    gutil.log('Can\'t find file (' + dependencyPath + ') from line (' + line.trim() + '). Random string will be used.');
+                    hashStr = Math.floor((Math.random() * 10000) + 1);
                 }
+
+                line = line.replace(groups[2], hashStr);
             }
+
             lines[i] = line;
             params.regExp.lastIndex = 0;
         }
