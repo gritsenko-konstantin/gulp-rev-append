@@ -70,7 +70,7 @@ var revPlugin = function revPlugin(params) {
                         hash.update(data.toString(), 'utf8');
                         hashStr = hash.digest('hex');
                     } catch (e) {
-                        gutil.log('Can\'t find file (' + dependencyPath + ') from line (' + line.trim() + '). Random string will be used.');
+                        gutil.log('Can\'t find file (' + dependencyPath + ') from line (' + groups[0] + '). Random string will be used.');
                         hashStr = Math.floor((Math.random() * 10000) + 1);
                     }
     
