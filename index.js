@@ -11,7 +11,7 @@ var revPlugin = function revPlugin(params) {
     var defaultParams = {
         basePath: null,
         forceRelativePathForExtensions: ".css",
-        regExp: /(?:href=|src=|url\()['|"]?([^\s>"']+?)\?rev=(@@@)['|"\)]+?/gi
+        regExp: /(?:href=|src=|url\()['|"]?([^\s>"']+?)\?rev=(@@@)['|"\)]/gi
     };
     params = extend({}, defaultParams, params);
 
