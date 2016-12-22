@@ -36,7 +36,7 @@ module.exports = function() {
     expect(declarations).to.not.be.null();
     expect(declarations).to.have.property('length').to.be.equal(3);
     for(var i = 0; i < declarations.length; i++) {
-      // plugin should change @@hash to hash based on file contents
+      // plugin should change @@@ to hash based on file contents
       expect(fileDeclarationRegex.exec(declarations[i])[2]).to.not.equal('@@@');
       fileDeclarationRegex.lastIndex = 0;
     }
