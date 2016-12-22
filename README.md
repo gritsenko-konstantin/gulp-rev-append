@@ -2,7 +2,7 @@ gulp-rev-append
 ---
 > gulp plugin for cache-busting files using query string file hash
 
-[![Build Status](https://travis-ci.org/bustardcelly/gulp-rev-append.png?branch=master)](https://travis-ci.org/bustardcelly/gulp-rev-append)
+[![Build Status](https://travis-ci.org/StyleT/gulp-rev-append.svg?branch=master)](https://travis-ci.org/StyleT/gulp-rev-append)
 
 installation
 ---
