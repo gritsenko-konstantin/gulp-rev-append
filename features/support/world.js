@@ -7,7 +7,7 @@ var World = function World(callback) {
 
   this.indexFile = undefined;
 
-  this.FILE_DECL = /(?:href=|src=|\()['|"]?([^\s>"']*?)\?rev=([^\s>"'\)]+)['"\)]+/gi;
+  this.FILE_DECL = /(?:href=|src=|url\()['|"]?([^\s>"']+?)\?rev=([^\s>"'\)]+)['"\)]+/gi;
   this.plugin = require('../../');
   this.cssFileContents = function(filename) {
       return fs.readFileSync([basePath, filename + '.css'].join(path.sep));
