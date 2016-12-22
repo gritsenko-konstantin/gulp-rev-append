@@ -10,7 +10,8 @@ var revPlugin = function revPlugin(params) {
 
     var defaultParams = {
         basePath: null,
-        regExp: /(?:href=|src=|url\()['|"]([^\s>"']+?)\?rev=(@@@)['|"]/gi
+        forceRelativePathForExtensions: ".css",
+        regExp: /(?:href=|src=|url\()['|"]?([^\s>"']+?)\?rev=(@@@)['|"\)]/gi
     };
     params = extend({}, defaultParams, params);
 
@@ -32,6 +33,7 @@ var revPlugin = function revPlugin(params) {
         var groups;
         var dependencyPath;
         var data, hash, hashStr;
+        var isForceRelativePathForFile = params.forceRelativePathForExtensions.indexOf(path.extname(file.path)) !== -1;
 
         if (!file) {
             throw new PluginError('gulp-rev-append', 'Missing file option for gulp-rev-append.');
@@ -52,14 +54,13 @@ var revPlugin = function revPlugin(params) {
                 if (groups.length > 1) {
                     // are we an "absoulte path"? (e.g. /js/app.js)
                     var normPath = path.normalize(groups[1]);
-                    if (normPath.indexOf(path.sep) === 0) { //we have absolute path
+                    if (normPath.indexOf(path.sep) === 0 || !isForceRelativePathForFile) { //we have absolute path
                         if (params.basePath !== null) {
                             dependencyPath = path.join(params.basePath, normPath);
                         } else {
                             dependencyPath = path.join(file.base, normPath);
                         }
-                    }
-                    else {
+                    } else {
                         dependencyPath = path.resolve(path.dirname(file.path), normPath);
                     }
     

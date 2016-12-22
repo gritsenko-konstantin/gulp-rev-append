@@ -1,3 +1,14 @@
 body {
   font-size: 100%;
+  background-image: url(../images/some_image.txt?rev=@@@);
+}
+
+span {
+  font-size: 100%;
+  background-image: url('../images/some_image.txt?rev=@@@');
+}
+
+div {
+  font-size: 100%;
+  background-image: url("../images/some_image.txt?rev=@@@");
 }

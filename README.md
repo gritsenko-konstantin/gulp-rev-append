@@ -39,13 +39,13 @@ That's fancy talk for any stylesheet or script declarations that are declared in
 <!doctype html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="style/style-one.css?rev=@@hash">
-    <script src="script/script-one.js?rev=@@hash"></script>
+    <link rel="stylesheet" type="text/css" href="style/style-one.css?rev=@@@">
+    <script src="script/script-one.js?rev=@@@"></script>
     <script src="script/script-two.js"></script>
   </head>
   <body>
     <div><p>hello, world!</p></div>
-    <script src="script/script-three.js?rev=@@hash"></script>
+    <script src="script/script-three.js?rev=@@@"></script>
   </body>
 </html>
 ```
@@ -68,7 +68,7 @@ will turn into something similar as the following after running `gulp-rev-append
 
 Any subsequent runs of the `gulp-rev-append` file will change the output _only_ if the target file(s) declared have been modified. This is because the revision hash is computed using the target file contents.
 
-The only requirement is that the dependency to be appended with the hash be declared using `?rev=`. The `@@hash` is not required, and any value will be overriden as the dependency file contents change.
+The only requirement is that the dependency to be appended with the hash be declared using `?rev=`. The `@@@` is not required, and any value will be overriden as the dependency file contents change.
 
 why?
 ---
