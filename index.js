@@ -33,7 +33,7 @@ var revPlugin = function revPlugin(params) {
         var groups;
         var dependencyPath;
         var data, hash, hashStr;
-        var isForceRelativePathForFile = params.forceRelativePathForExtensions.includes(path.extname(file.path));
+        var isForceRelativePathForFile = params.forceRelativePathForExtensions.indexOf(path.extname(file.path)) !== -1;
 
         if (!file) {
             throw new PluginError('gulp-rev-append', 'Missing file option for gulp-rev-append.');
