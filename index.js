@@ -61,7 +61,7 @@ var revPlugin = function revPlugin(params) {
                             dependencyPath = path.join(file.base, normPath);
                         }
                     } else {
-                        dependencyPath = path.resolve(path.dirname(file.path), normPath);
+                        dependencyPath = path.resolve(params.basePath || path.dirname(file.path), normPath);
                     }
     
                     try {
